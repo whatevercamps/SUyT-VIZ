@@ -1,0 +1,274 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.Navbar nav {
+  position: sticky;
+  z-index: 1000;
+  border-bottom: solid 0.5px rgba(0, 0, 0, 0.5);
+  background-color: #313440;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+#sidebar {
+  position: sticky;
+  height: 100vh;
+  min-width: 250px;
+  max-width: 250px;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background-color: #313440;
+  overflow-x: hidden;
+  padding-top: 10px;
+}
+
+#sidebar * {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #a6a9bc;
+  display: block;
+}
+
+#sidebar ul li .link {
+  cursor: pointer;
+}
+
+#sidebar ul li hr {
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 0;
+  border-top: 1px solid #a6a9bc;
+}
+
+/* sidebar css taken from bootstrapious */
+
+#sidebar {
+  transition: all 0.5s scale-up-center;
+}
+
+/* Shrinking the sidebar from 250px to 80px and center aligining its content*/
+#sidebar.active {
+  min-width: 100px;
+  max-width: 100px;
+  text-align: center;
+}
+
+/* Toggling the sidebar header content, hide the big heading [h3] and showing the small heading [strong] and vice versa*/
+#sidebar .sidebar-header strong {
+  display: none;
+}
+#sidebar.active .sidebar-header h3 {
+  display: none;
+}
+
+#sidebar ul {
+  text-align: left;
+}
+
+#sidebar ul.sublista {
+  text-align: center;
+}
+
+#sidebar ul.sublista li {
+  cursor: pointer;
+}
+
+#sidebar ul li.selected {
+  background-color: green;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  /* shape-rendering: crispEdges; */
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.LinechartWrapper .Controls .card {
+  width: 400px;
+  max-width: 80%;
+}
+
+#content {
+  width: 100%;
+}
+
+.AccesibilityIJ .dataVis {
+  height: 30vh;
+  margin-bottom: 2%;
+}
+.AccesibilityIJ .dataVis.expand {
+  height: 55vh;
+}
+
+.AccesibilityIJ .categoricalTempral {
+  height: 20vh;
+}
+
+.AccesibilityIJ .noTemporal {
+  height: 70vh;
+}
+
+.AccesibilityIJ .linearTemporal {
+  margin-top: 10;
+  height: 25vh;
+}
+
+.mapboxmapContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+/* * {
+  border: 1px solid gray;
+} */
+
+.difTooltip {
+  opacity: 0;
+  z-index: -100;
+}
+
+.difTooltip.showTooltip {
+  opacity: 1;
+  z-index: 1;
+}
+
+.tooltip {
+  opacity: 0;
+  z-index: -100;
+}
+
+.tooltip.showTooltip {
+  opacity: 1;
+  z-index: 1;
+}
+
+.Timeline .linechart {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2px;
+}
+
+.Timeline .dot {
+  fill: #ffab00;
+  stroke: #fff;
+}
+
+.Timeline .selected-point {
+  opacity: 0.8 !important;
+  stroke: black !important;
+  fill: black !important;
+  stroke-width: 1px;
+}
+
+.Timeline,
+.Timeline .timelineChart {
+  height: 100%;
+}
+
+.HeatmapWrapper .nav.nav-pills {
+  padding-left: 8%;
+}
+
+.modal-90w {
+  margin: 0;
+  width: 100vw;
+  padding: 0;
+}
+.modal-90w .modal-content {
+  margin: 10% 35%;
+  width: 80vw;
+  height: 85vh;
+  overflow: scroll;
+}
+
+.spin-loader {
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  border: 8px solid #eef3fa;
+  border-top: 8px solid rgba(80, 140, 215, 0.25);
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.overlay {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.is-loading {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.categoricalTemporal {
+  transition: all ease-out 2s;
+  margin-top: 8%;
+}
+.categoricalTemporal.hide {
+  height: 0;
+  overflow: hidden;
+}
+
+.HeatmapWrapper .flotante {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.AccesibilityIJ p {
+  font-size: 0.9em;
+  text-align: justify;
+}
