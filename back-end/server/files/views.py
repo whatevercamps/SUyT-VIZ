@@ -252,18 +252,25 @@ def heatmap_nueva_version(req):
         )
 
     try:
-        filename = "{}/{}/{}-{}-{}.json".format(
+        filename = "{}/{}/{}-{}-{}.csv".format(
             main_path, escenario, indicador, subscripts, tiempo
         )
-        with open(filename, "r") as file:
-            file_data = json.load(file)
-
-            return HttpResponse(json.dumps(file_data), content_type="application/json")
+        if ".json" in filename:
+            with open(filename, "r") as file:
+                file_data = json.load(file)
+                return HttpResponse(
+                    json.dumps(file_data), content_type="application/json"
+                )
+        elif ".csv" in filename:
+            df = pd.read_csv(filename)
+            return HttpResponse(
+                df.to_json(orient="records"), content_type="application/json"
+            )
 
     except:
         print("error - error: ", sys.exc_info())
         return HttpResponse(
-            json.dumps({"err": sys.exc_info()}), content_type="application/json"
+            json.dumps({"err": str(sys.exc_info())}), content_type="application/json"
         )
 
 
