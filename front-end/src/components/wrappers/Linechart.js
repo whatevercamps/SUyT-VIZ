@@ -117,6 +117,9 @@ const Linechart = (target, pw, ph) => {
       prevcomparar = parametros[0].name;
     }
     svg.selectAll(".category").remove();
+
+    console.log("data", concentrations);
+
     let joinData = svg.selectAll(".category").data(concentrations);
 
     joinData.exit().remove();

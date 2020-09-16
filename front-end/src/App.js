@@ -11,6 +11,19 @@ import Sidebar from "./layout/Sidebar";
 import Home from "./components/Home";
 import AccesibilityIJ from "./indicadores/AccesibilityIJ/AccesibilityIJ";
 
+var getParams = function (url) {
+  var params = {};
+  var parser = document.createElement("a");
+  parser.href = url;
+  var query = parser.search.substring(1);
+  var vars = query.split("&");
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split("=");
+    params[pair[0]] = decodeURIComponent(pair[1]);
+  }
+  return params;
+};
+
 function App() {
   const [selectedZonas, setSelectedZonas] = useState(
     configData.zonas && ([configData.zonas[0] + 1, 2, 3] || [1])
@@ -37,27 +50,27 @@ function App() {
 
   useEffect(() => {
     setDataLoaded(false);
-    const query = `http://localhost:8000/files/get?modos=car$tpc&nombres=${
-      selectedIndicador.ruta
-    }&attrs=true&zonas=${selectedZonas
-      .map((z) => `a${z}`)
-      .join("$")}&escenarios=${selectedEscenarios
-      .map((es) => configData.escenarios.find((e) => e.nombre === es).ruta)
-      .join("$")}`;
-    d3.json(query).then((data) => {
-      setData(data);
-      setDataLoaded(true);
-    });
+    const params = getParams(window.location.href);
+    if (params && params.escenario) {
+      const query = `http://localhost:8000/files/get?escenarios=${params.escenario}`;
+      // const query = `http://localhost:8000/files/get?modos=car$tpc&nombres=${
+      //   selectedIndicador.ruta
+      // }&attrs=true&zonas=${selectedZonas
+      //   .map((z) => `a${z}`)
+      //   .join("$")}&escenarios=${selectedEscenarios
+      //   .map((es) => configData.escenarios.find((e) => e.nombre === es).ruta)
+      //   .join("$")}`;
+      d3.json(query).then((data) => {
+        setData(data);
+        setDataLoaded(true);
+      });
+    }
   }, [selectedZonas, selectedIndicador, selectedEscenarios]);
 
   useEffect(() => {
-    //;
     let sG = [];
     selectedGraficas.length &&
       selectedGraficas.forEach((s) => {
-        //;
-
-        //;
         if (selectedIndicador.graficas.includes(s)) {
           sG.push(s);
         }
@@ -110,10 +123,10 @@ function App() {
 
   return (
     <div className='App'>
-      {/* <Router> */}
-      <Navbar tiempos={tiempos} setTiempos={setTiempos} />
-      <div className='wrapper'>
-        {/* <Sidebar
+      <Router>
+        <Navbar tiempos={tiempos} setTiempos={setTiempos} />
+        <div className='wrapper'>
+          <Sidebar
             removeOrAddToSelectedZonas={removeOrAddToSelectedZonas}
             selectedZonas={selectedZonas}
             changeSelectedIndicador={changeSelectedIndicador}
@@ -122,18 +135,18 @@ function App() {
             removeOrAddToSelectedGraficas={removeOrAddToSelectedGraficas}
             selectedEscenarios={selectedEscenarios}
             removeOrAddToSelectedEscenarios={removeOrAddToSelectedEscenarios}
-          /> */}
-        <div id='content' style={{ padding: "10px" }}>
-          <AccesibilityIJ
+          />
+          <div id='content' style={{ padding: "10px" }}>
+            {/* <AccesibilityIJ
             dataLoaded={dataLoaded}
             data={data}
             selectedGraficas={selectedGraficas}
             selectedZonas={selectedZonas}
             tiempos={tiempos}
-          />
-          {/* <Switch>
-              <Route path='/accesibility-ij'>
-                <AccesibilityIJ
+          /> */}
+            <Switch>
+              <Route path='/slow-tours'>
+                <Home
                   dataLoaded={dataLoaded}
                   data={data}
                   selectedGraficas={selectedGraficas}
@@ -141,10 +154,19 @@ function App() {
                   tiempos={tiempos}
                 />
               </Route>
-            </Switch> */}
+              {/* <Route path='/accesibility-ij'>
+                <AccesibilityIJ
+                  dataLoaded={dataLoaded}
+                  data={data}
+                  selectedGraficas={selectedGraficas}
+                  selectedZonas={selectedZonas}
+                  tiempos={tiempos}
+                />
+              </Route> */}
+            </Switch>
+          </div>
         </div>
-      </div>
-      {/* </Router> */}
+      </Router>
     </div>
   );
 }
