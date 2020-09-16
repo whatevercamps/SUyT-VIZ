@@ -256,7 +256,9 @@ def heatmap_nueva_version(req):
             main_path, escenario, indicador, subscripts, tiempo
         )
         with open(filename, "r") as file:
-            return HttpResponse(file, content_type="application/json")
+            file_data = json.load(file)
+
+            return HttpResponse(json.dumps(file_data), content_type="application/json")
 
     except:
         print("error - error: ", sys.exc_info())
