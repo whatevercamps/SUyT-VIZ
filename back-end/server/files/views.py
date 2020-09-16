@@ -246,7 +246,7 @@ def heatmap_nueva_version(req):
     indicador = req.GET.get("indicador", "accessibility ij")
     subscripts = req.GET.get("subcripts", "car|opeak")
 
-    if " ij" not in escenario:
+    if " ij" not in indicador:
         return HttpResponse(
             json.dumps({"err": "el archivo no es ij"}), content_type="application/json"
         )
