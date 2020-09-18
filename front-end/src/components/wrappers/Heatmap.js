@@ -164,14 +164,10 @@ const Heatmap = (
             )
             .map((d, index) => {
               d["value"] = d["value"] - compareData1[index]["value"];
-              d["zi"] = `a${d["Zone 1"]}`;
-              d["zj"] = `a${d["Zone 2"]}`;
               return d;
             })
         : compareData2.map((d, index) => {
             d["value"] = d["value"] - compareData1[index]["value"];
-            d["zi"] = `a${d["Zone 1"]}`;
-            d["zj"] = `a${d["Zone 2"]}`;
             return d;
           });
     } else {
