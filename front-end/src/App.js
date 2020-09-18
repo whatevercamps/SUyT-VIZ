@@ -52,13 +52,14 @@ function App() {
     setDataLoaded(false);
     const params = getParams(window.location.href);
     if (params && params.escenario) {
-      const query = `http://localhost:8000/files/heatmap?escenario=${
+      const query = `http://localhost:5000/files/heatmap?escenario=${
         params.escenario
       }${params.tiempo && "&tiempo=" + params.tiempo}${
         params.indicador && "&indicador=" + params.indicador
       }${params.subscripts && "&subscripts=" + params.subscripts}`;
 
       d3.json(query).then((data) => {
+        console.log("cargo", data);
         setData(data);
         setDataLoaded(true);
       });
