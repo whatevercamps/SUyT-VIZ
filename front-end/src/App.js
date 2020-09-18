@@ -52,7 +52,7 @@ function App() {
     setDataLoaded(false);
     const params = getParams(window.location.href);
     if (params && params.escenario) {
-      const query = `http://localhost:5000/files/heatmap?escenario=${
+      const query = `http://172.24.101.57:5000/files/heatmap?escenario=${
         params.escenario
       }${params.tiempo ? "&tiempo=" + params.tiempo : ""}${
         params.indicador ? "&indicador=" + params.indicador : ""
