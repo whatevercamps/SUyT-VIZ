@@ -54,9 +54,9 @@ function App() {
     if (params && params.escenario) {
       const query = `http://localhost:5000/files/heatmap?escenario=${
         params.escenario
-      }${params.tiempo && "&tiempo=" + params.tiempo}${
-        params.indicador && "&indicador=" + params.indicador
-      }${params.subscripts && "&subscripts=" + params.subscripts}`;
+      }${params.tiempo ? "&tiempo=" + params.tiempo : ""}${
+        params.indicador ? "&indicador=" + params.indicador : ""
+      }${params.subscripts ? "&subscripts=" + params.subscripts : ""}`;
 
       d3.json(query).then((data) => {
         console.log("cargo", data);
