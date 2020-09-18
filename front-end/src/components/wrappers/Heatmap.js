@@ -50,20 +50,20 @@ const Heatmap = (
   var mousemove = function (d) {
     if (diferencia)
       tooltip.html(
-        `El valor de accesibilidad <br>de la zona ${d["Zone 2"]} a la zona ${
-          d["Zone 1"]
+        `El valor de accesibilidad <br>de la zona ${d.zj} a la zona ${
+          d.zi
         } es <b>${(d.value || 0).toFixed(0)}</b>`
       );
     else {
       tooltip.html(
         `El valor de de la diferencia entre el tiempo Ti y Tj <br>de la zona ${
-          d["Zone 2"]
-        } a la zona ${d["Zone 1"]} es <b>${(d.value || 0).toFixed(0)}</b>`
+          d.zj
+        } a la zona ${d.zi} es <b>${(d.value || 0).toFixed(0)}</b>`
       );
     }
     setParDeZonas([
-      d["Zone 1"].replace("a", "UPZ"),
-      d["Zone 2"].replace("a", "UPZ"),
+      d.zi.replace("a", "UPZ"),
+      d.zj.replace("a", "UPZ"),
       myColor2(d.value),
     ]);
     tooltip
@@ -115,12 +115,10 @@ const Heatmap = (
     svg
       .selectAll("rect")
       .style("stroke", (d) => {
-        return d["Zone 2"] === zona || d["Zone 1"] === zona
-          ? "#f9ec4e"
-          : "none";
+        return d.zj === zona || d.zi === zona ? "#f9ec4e" : "none";
       })
       .style("stroke-width", (d) => {
-        return d["Zone 2"] === zona || d["Zone 1"] === zona ? 1 : 0;
+        return d.zj === zona || d.zi === zona ? 1 : 0;
       });
   };
 
@@ -161,41 +159,45 @@ const Heatmap = (
         ? compareData2
             .filter(
               (d) =>
-                zonasSeleccionadas.includes(d["Zone 1"].split("a")[1]) &&
-                zonasSeleccionadas.includes(d["Zone 2"].split("a")[1])
+                zonasSeleccionadas.includes(d["zi"].split("a")[1]) &&
+                zonasSeleccionadas.includes(d["zj"].split("a")[1])
             )
             .map((d, index) => {
               d["value"] = d["value"] - compareData1[index]["value"];
+              d["zi"] = `a${d["Zone 1"]}`;
+              d["zj"] = `a${d["Zone 2"]}`;
               return d;
             })
         : compareData2.map((d, index) => {
             d["value"] = d["value"] - compareData1[index]["value"];
+            d["zi"] = `a${d["Zone 1"]}`;
+            d["zj"] = `a${d["Zone 2"]}`;
             return d;
           });
     } else {
       dataFiltered = zonasSeleccionadas
         ? data.filter(
             (d) =>
-              zonasSeleccionadas.includes(d["Zone 1"].split("a")[1]) &&
-              zonasSeleccionadas.includes(d["Zone 2"].split("a")[1])
+              zonasSeleccionadas.includes(d["zi"].split("a")[1]) &&
+              zonasSeleccionadas.includes(d["zj"].split("a")[1])
           )
         : data;
     }
 
     var zones = d3
       .map(dataFiltered, function (d) {
-        return d["Zone 1"];
+        return d.zi;
       })
       .keys();
     if (sort === 1) {
       zones.sort((a, b) => {
         const valA = d3.sum(
-          dataFiltered.filter((z) => z["Zone 1"] === a),
+          dataFiltered.filter((z) => z["zi"] === a),
           (d) => d["value"]
         );
 
         const valB = d3.sum(
-          dataFiltered.filter((z) => z["Zone 1"] === b),
+          dataFiltered.filter((z) => z["zi"] === b),
           (d) => d["value"]
         );
 
@@ -204,12 +206,12 @@ const Heatmap = (
     } else if (sort === 2) {
       zones.sort((a, b) => {
         const valA = d3.sum(
-          dataFiltered.filter((z) => z["Zone 2"] === a),
+          dataFiltered.filter((z) => z["zj"] === a),
           (d) => d["value"]
         );
 
         const valB = d3.sum(
-          dataFiltered.filter((z) => z["Zone 2"] === b),
+          dataFiltered.filter((z) => z["zj"] === b),
           (d) => d["value"]
         );
 
@@ -250,14 +252,14 @@ const Heatmap = (
     svg
       .selectAll("rect")
       .data(dataFiltered, function (d) {
-        return d["Zone 1"] + ":" + d["Zone 2"];
+        return d.zi + ":" + d.zj;
       })
       .join(
         (enter) =>
           enter
             .append("rect")
             .attr("x", function (d) {
-              return x(d["Zone 1"]);
+              return x(d.zi);
             })
             .attr("y", -500)
             .attr("rx", 4)
@@ -270,9 +272,7 @@ const Heatmap = (
             .style("stroke-width", 4)
             .style("stroke", "none")
             .style("opacity", 0.8)
-            .call((enter) =>
-              enter.transition(1000).attr("y", (d) => y(d["Zone 2"]))
-            )
+            .call((enter) => enter.transition(1000).attr("y", (d) => y(d.zj)))
             .on("mouseover", mouseover)
             .on("mousemove", mousemove)
             .on("mouseleave", mouseleave),
@@ -281,10 +281,10 @@ const Heatmap = (
             update
               .transition(1000)
               .attr("x", function (d) {
-                return x(d["Zone 1"]);
+                return x(d.zi);
               })
               .attr("y", function (d) {
-                return y(d["Zone 2"]);
+                return y(d.zj);
               })
               .attr("width", x.bandwidth())
               .attr("height", y.bandwidth())
@@ -330,7 +330,7 @@ export default Heatmap;
   const htDiferencia = h1data.map((h, index) => {
     if (partyMode === true) {
       const randomTruth = Math.max(
-        (h["Zone 1"] % 2) - Math.floor(Math.random() * Math.floor(2)),
+        (h["zi"] % 2) - Math.floor(Math.random() * Math.floor(2)),
         0
       );
       h["value"] = !randomTruth
