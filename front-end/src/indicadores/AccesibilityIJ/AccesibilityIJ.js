@@ -146,13 +146,13 @@ function AccesibilityIJ(props) {
 
   return (
     <div className='AccesibilityIJ'>
-      {loadedCharts < 2 && (
+      {/* {loadedCharts < 2 && (
         <div className='overlay'>
           <div className='loader is-loading'>
             <div className='spin-loader'></div>
           </div>
         </div>
-      )}
+      )} */}
       <Container fluid>
         <Row>
           <Col lg={12}>
