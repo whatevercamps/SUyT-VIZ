@@ -54,39 +54,39 @@ function AccesibilityIJ(props) {
     }
   };
 
-  useEffect(() => {
-    console.log("cargando heatmaps");
+  // useEffect(() => {
+  //   console.log("cargando heatmaps");
 
-    d3.json(
-      `http://localhost:8000/files/heatmap?mintime=${tiemposComparar[0]}&maxtime=${tiemposComparar[0]}`
-    ).then(setHeatmapCompareData1);
+  //   d3.json(
+  //     `http://localhost:8000/files/heatmap?mintime=${tiemposComparar[0]}&maxtime=${tiemposComparar[0]}`
+  //   ).then(setHeatmapCompareData1);
 
-    d3.json(
-      `http://localhost:8000/files/heatmap?mintime=${tiemposComparar[1]}&maxtime=${tiemposComparar[1]}`
-    ).then(setHeatmapCompareData2);
-  }, [tiemposComparar]);
+  //   d3.json(
+  //     `http://localhost:8000/files/heatmap?mintime=${tiemposComparar[1]}&maxtime=${tiemposComparar[1]}`
+  //   ).then(setHeatmapCompareData2);
+  // }, [tiemposComparar]);
 
   useEffect(() => {}, [totalPorZona]);
 
   useEffect(() => {}, [zonasParaDona]);
 
-  useEffect(() => {
-    if (zonasSeleccionadas && zonasSeleccionadas.length > 0) {
-      d3.json(
-        `http://localhost:8000/files/nuevo-timeline?zonas=${zonasSeleccionadas.join(
-          "$"
-        )}`
-      ).then(setAdditionalTimelineData);
-      if (totalPorZona) {
-        setzonasParaDona(
-          totalPorZona.filter((z) => zonasSeleccionadas.includes(`${z.zone}`))
-        );
-      }
-    } else {
-      setAdditionalTimelineData([]);
-    }
-    return () => {};
-  }, [zonasSeleccionadas]);
+  // useEffect(() => {
+  //   if (zonasSeleccionadas && zonasSeleccionadas.length > 0) {
+  //     d3.json(
+  //       `http://localhost:8000/files/nuevo-timeline?zonas=${zonasSeleccionadas.join(
+  //         "$"
+  //       )}`
+  //     ).then(setAdditionalTimelineData);
+  //     if (totalPorZona) {
+  //       setzonasParaDona(
+  //         totalPorZona.filter((z) => zonasSeleccionadas.includes(`${z.zone}`))
+  //       );
+  //     }
+  //   } else {
+  //     setAdditionalTimelineData([]);
+  //   }
+  //   return () => {};
+  // }, [zonasSeleccionadas]);
 
   const agregarOQuitarZona = (zona) => {
     setZonasSeleccionadas((zs) => {
@@ -103,17 +103,17 @@ function AccesibilityIJ(props) {
     });
   };
 
-  useEffect(() => {
-    d3.json("http://localhost:8000/files/nuevo-timeline").then((data) => {
-      seTimelineData(data);
-    });
+  // useEffect(() => {
+  //   d3.json("http://localhost:8000/files/nuevo-timeline").then((data) => {
+  //     seTimelineData(data);
+  //   });
 
-    d3.json("http://localhost:8000/files/totalporzonas?modo=deeqr").then(
-      (data) => {
-        setTotalPorZona(data);
-      }
-    );
-  }, []);
+  //   d3.json("http://localhost:8000/files/totalporzonas?modo=deeqr").then(
+  //     (data) => {
+  //       setTotalPorZona(data);
+  //     }
+  //   );
+  // }, []);
 
   useEffect(() => {
     const container = heatmapContainerRef.current;
@@ -122,19 +122,19 @@ function AccesibilityIJ(props) {
     setHeatmapWidth(container.offsetWidth);
   }, [extended]);
 
-  useEffect(() => {
-    const mintime =
-      d3.min(tiempos) !== undefined && d3.min(tiempos) !== null
-        ? d3.min(tiempos)
-        : 0;
-    const maxtime =
-      d3.max(tiempos) !== undefined && d3.max(tiempos) !== null
-        ? d3.max(tiempos)
-        : 41;
-    d3.json(
-      `http://localhost:8000/files/heatmap?mintime=${mintime}&maxtime=${maxtime}`
-    ).then(setHeatmapData);
-  }, [tiempos]);
+  // useEffect(() => {
+  //   const mintime =
+  //     d3.min(tiempos) !== undefined && d3.min(tiempos) !== null
+  //       ? d3.min(tiempos)
+  //       : 0;
+  //   const maxtime =
+  //     d3.max(tiempos) !== undefined && d3.max(tiempos) !== null
+  //       ? d3.max(tiempos)
+  //       : 41;
+  //   d3.json(
+  //     `http://localhost:8000/files/heatmap?mintime=${mintime}&maxtime=${maxtime}`
+  //   ).then(setHeatmapData);
+  // }, [tiempos]);
 
   const chartLoaded = () => {
     setLoadedCharts((d) => d + 1);
@@ -158,7 +158,7 @@ function AccesibilityIJ(props) {
           <Col lg={12}>
             <div className='row noTemporal' ref={lineRef}>
               <div className='col-lg-4'>
-                <Mapbox
+                {/* <Mapbox
                   lineColorScale={lineColorScale}
                   parDeZonas={parDeZonas}
                   escala={escala}
@@ -170,7 +170,7 @@ function AccesibilityIJ(props) {
                     setUltimaZonaInteresada(zz)
                   }
                   zonasBarra={zonasParaDona}
-                />
+                /> */}
               </div>
               <div className='col-lg-8'>
                 <div
@@ -192,7 +192,7 @@ function AccesibilityIJ(props) {
                           overflow: "hidden",
                         }}
                         zonasSeleccionadas={zonasSeleccionadas}
-                        heatmapData={heatmapData}
+                        heatmapData={props.heatmapData}
                         escala={escala}
                         width={heatmapWidth}
                         height={heatmapHeight}
@@ -210,14 +210,14 @@ function AccesibilityIJ(props) {
                   }
                 >
                   <div className='col-12'>
-                    <BarsWrapper chartLoaded={chartLoaded} tiempos={tiempos} />
+                    {/* <BarsWrapper chartLoaded={chartLoaded} tiempos={tiempos} /> */}
                   </div>
                 </div>
               </div>
             </div>
             <div className='row linearTemporal'>
               <div className='col-lg-3'>
-                {zonasParaDona && zonasParaDona.length ? (
+                {/* {zonasParaDona && zonasParaDona.length ? (
                   <DonutsWrapper
                     chartLoaded={chartLoaded}
                     tiempos={tiempos}
@@ -227,10 +227,10 @@ function AccesibilityIJ(props) {
                   <span>
                     Seleccione zonas en el mapa para compararlas entre sí.
                   </span>
-                )}
+                )} */}
               </div>
               <div className='col-lg-9'>
-                {props.selectedGraficas &&
+                {/* {props.selectedGraficas &&
                 props.selectedGraficas.includes("Line chart") ? (
                   lineRef &&
                   lineRef.current &&
@@ -245,7 +245,7 @@ function AccesibilityIJ(props) {
                   )
                 ) : (
                   <></>
-                )}
+                )} */}
               </div>
             </div>
           </Col>
@@ -263,10 +263,10 @@ function AccesibilityIJ(props) {
           style={{ marginBottom: "50px" }}
         >
           <Col lg={8}>
-            <TimeRanger
+            {/* <TimeRanger
               tiempos={tiemposComparar}
               setTiempos={setTiemposComparar}
-            ></TimeRanger>
+            ></TimeRanger> */}
           </Col>
           {/* <Col lg={2}>
             <Button onClick={() => setPartyMode((pm) => !pm)} variant='info'>
@@ -276,7 +276,7 @@ function AccesibilityIJ(props) {
         </Row>
         <Row>
           <Col lg={5}>
-            <HeatmapsWrapper
+            {/* <HeatmapsWrapper
               setLineColorScale={setLineColorScale}
               chartLoaded={chartLoaded}
               style={{
@@ -292,21 +292,21 @@ function AccesibilityIJ(props) {
               setParDeZonas={setParDeZonas}
               diferencia={true}
               ultimaZonaInteresada={ultimaZonaInteresada}
-            />
+            /> */}
           </Col>
           <Col lg={3}>
-            <Button onClick={() => setBarrasDifSort((df) => !df)}>
+            {/* <Button onClick={() => setBarrasDifSort((df) => !df)}>
               {" "}
               {barrasDifSort ? "Ordenar por idZona" : "Ordenar por diferencia"}
-            </Button>
-            <HorizontalBarsWrapper
+            </Button> */}
+            {/* <HorizontalBarsWrapper
               sort={barrasDifSort}
               chartLoaded={chartLoaded}
               tiempos={tiemposComparar}
-            />
+            /> */}
           </Col>
           <Col lg={4}>
-            <Mapbox
+            {/* <Mapbox
               diferencia={true}
               tiempos={tiemposComparar}
               height={"80vh"}
@@ -318,11 +318,11 @@ function AccesibilityIJ(props) {
               agregarOQuitarZona={agregarOQuitarZona}
               cambiarUltimaZonaInteresada={(zz) => setUltimaZonaInteresada(zz)}
               zonasBarra={zonasParaDona}
-            />
+            /> */}
           </Col>
         </Row>
       </Container>
-      <Modal
+      {/* <Modal
         show={initModalShow === true && loadedCharts >= 2}
         onHide={hideInitModal}
       >
@@ -347,7 +347,7 @@ function AccesibilityIJ(props) {
             visualizaciones para comparar la accesibilidad entre zonas.
           </p>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

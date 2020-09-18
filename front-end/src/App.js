@@ -52,20 +52,18 @@ function App() {
     setDataLoaded(false);
     const params = getParams(window.location.href);
     if (params && params.escenario) {
-      const query = `http://localhost:8000/files/get?escenarios=${params.escenario}`;
-      // const query = `http://localhost:8000/files/get?modos=car$tpc&nombres=${
-      //   selectedIndicador.ruta
-      // }&attrs=true&zonas=${selectedZonas
-      //   .map((z) => `a${z}`)
-      //   .join("$")}&escenarios=${selectedEscenarios
-      //   .map((es) => configData.escenarios.find((e) => e.nombre === es).ruta)
-      //   .join("$")}`;
+      const query = `http://localhost:8000/files/heatmap?escenario=${
+        params.escenario
+      }${params.tiempo && "&tiempo=" + params.tiempo}${
+        params.indicador && "&indicador=" + params.indicador
+      }${params.subscripts && "&subscripts=" + params.subscripts}`;
+
       d3.json(query).then((data) => {
         setData(data);
         setDataLoaded(true);
       });
     }
-  }, [selectedZonas, selectedIndicador, selectedEscenarios]);
+  }, []);
 
   useEffect(() => {
     let sG = [];
@@ -126,7 +124,7 @@ function App() {
       <Router>
         <Navbar tiempos={tiempos} setTiempos={setTiempos} />
         <div className='wrapper'>
-          <Sidebar
+          {/* <Sidebar
             removeOrAddToSelectedZonas={removeOrAddToSelectedZonas}
             selectedZonas={selectedZonas}
             changeSelectedIndicador={changeSelectedIndicador}
@@ -135,16 +133,16 @@ function App() {
             removeOrAddToSelectedGraficas={removeOrAddToSelectedGraficas}
             selectedEscenarios={selectedEscenarios}
             removeOrAddToSelectedEscenarios={removeOrAddToSelectedEscenarios}
-          />
-          <div id='content' style={{ padding: "10px" }}>
-            {/* <AccesibilityIJ
-            dataLoaded={dataLoaded}
-            data={data}
-            selectedGraficas={selectedGraficas}
-            selectedZonas={selectedZonas}
-            tiempos={tiempos}
           /> */}
-            <Switch>
+          <div id='content' style={{ padding: "10px" }}>
+            <AccesibilityIJ
+              dataLoaded={dataLoaded}
+              heatmapData={data}
+              selectedGraficas={selectedGraficas}
+              selectedZonas={selectedZonas}
+              tiempos={tiempos}
+            />
+            {/* <Switch>
               <Route path='/slow-tours'>
                 <Home
                   dataLoaded={dataLoaded}
@@ -162,8 +160,8 @@ function App() {
                   selectedZonas={selectedZonas}
                   tiempos={tiempos}
                 />
-              </Route> */}
-            </Switch>
+              </Route> 
+            </Switch> */}
           </div>
         </div>
       </Router>
