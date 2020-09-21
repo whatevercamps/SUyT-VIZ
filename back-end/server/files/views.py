@@ -299,7 +299,7 @@ def new_min_max(req):
         pmin = df["value"].min()
         pmax = df["value"].max()
         return HttpResponse(
-            json.dumps({min: pmin, max: pmax}), content_type="application/json"
+            json.dumps({"min": pmin, "max": pmax}), content_type="application/json"
         )
 
     except:
