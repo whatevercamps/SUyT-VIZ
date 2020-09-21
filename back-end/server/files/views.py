@@ -296,9 +296,8 @@ def new_min_max(req):
         )
         df = pd.read_csv(filename)
         df["value"] = df[subscripts]
-        pmin = df.min(level="value")
-        pmax = df.max(level="value")
-        print(df)
+        pmin = df["value"].min()
+        pmax = df["value"].max()
         return HttpResponse(
             json.dumps({min: pmin, max: pmax}), content_type="application/json"
         )
