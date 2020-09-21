@@ -47,29 +47,29 @@ const Heatmap = (
     d3.select(this).style("stroke", "black").style("opacity", 1);
   };
 
-  var mousemove = function (d) {
-    if (diferencia)
-      tooltip.html(
-        `El valor de accesibilidad <br>de la zona ${d.zj} a la zona ${
-          d.zi
-        } es <b>${(d.value || 0).toFixed(0)}</b>`
-      );
-    else {
-      tooltip.html(
-        `El valor de de la diferencia entre el tiempo Ti y Tj <br>de la zona ${
-          d.zj
-        } a la zona ${d.zi} es <b>${(d.value || 0).toFixed(0)}</b>`
-      );
-    }
-    setParDeZonas([
-      d.zi.replace("a", "UPZ"),
-      d.zj.replace("a", "UPZ"),
-      myColor2(d.value),
-    ]);
-    tooltip
-      .style("left", d3.mouse(this)[0] + 70 + "px")
-      .style("top", d3.mouse(this)[1] + 70 + "px");
-  };
+  // var mousemove = function (d) {
+  //   if (diferencia)
+  //     tooltip.html(
+  //       `El valor de accesibilidad <br>de la zona ${d.zj} a la zona ${
+  //         d.zi
+  //       } es <b>${(d.value || 0).toFixed(0)}</b>`
+  //     );
+  //   else {
+  //     tooltip.html(
+  //       `El valor de de la diferencia entre el tiempo Ti y Tj <br>de la zona ${
+  //         d.zj
+  //       } a la zona ${d.zi} es <b>${(d.value || 0).toFixed(0)}</b>`
+  //     );
+  //   }
+  //   setParDeZonas([
+  //     d.zi.replace("a", "UPZ"),
+  //     d.zj.replace("a", "UPZ"),
+  //     myColor2(d.value),
+  //   ]);
+  //   tooltip
+  //     .style("left", d3.mouse(this)[0] + 70 + "px")
+  //     .style("top", d3.mouse(this)[1] + 70 + "px");
+  // };
   var mouseleave = function (d) {
     tooltip.attr("class", "tooltip");
     d3.select(this).style("stroke", "none").style("opacity", 0.8);
@@ -268,10 +268,10 @@ const Heatmap = (
             .style("stroke-width", 4)
             .style("stroke", "none")
             .style("opacity", 0.8)
-            .call((enter) => enter.transition(1000).attr("y", (d) => y(d.zj)))
-            .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
-            .on("mouseleave", mouseleave),
+            .call((enter) => enter.transition(1000).attr("y", (d) => y(d.zj))),
+        // .on("mouseover", mouseover)
+        // .on("mousemove", mousemove)
+        // .on("mouseleave", mouseleave),
         (update) =>
           update.call((update) =>
             update
