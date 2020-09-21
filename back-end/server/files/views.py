@@ -266,6 +266,8 @@ def heatmap_nueva_version(req):
                 )
         elif ".csv" in filename:
             df = pd.read_csv(filename)
+            df["value"] = df[subscripts]
+            print(df)
             return HttpResponse(
                 df.to_json(orient="records"), content_type="application/json"
             )
