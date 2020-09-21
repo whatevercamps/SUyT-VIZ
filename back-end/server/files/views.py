@@ -279,6 +279,37 @@ def heatmap_nueva_version(req):
         )
 
 
+def new_min_max(req):
+    tiempo = req.GET.get("tiempo", "0")
+    escenario = req.GET.get("escenario")
+    indicador = req.GET.get("indicador", "accessibility ij")
+    subscripts = req.GET.get("subcripts", "car|opeak")
+
+    if " ij" not in indicador:
+        return HttpResponse(
+            json.dumps({"err": "el archivo no es ij"}), content_type="application/json"
+        )
+
+    try:
+        filename = "{}/{}/{}-{}-{}.csv".format(
+            main_path, escenario, indicador, subscripts, tiempo
+        )
+        df = pd.read_csv(filename)
+        df["value"] = df[subscripts]
+        pmin = df.min(level="value")
+        pmax = df.max(level="value")
+        print(df)
+        return HttpResponse(
+            json.dumps({min: pmin, max: pmax}), content_type="application/json"
+        )
+
+    except:
+        print("error - error: ", sys.exc_info())
+        return HttpResponse(
+            json.dumps({"err": str(sys.exc_info())}), content_type="application/json"
+        )
+
+
 def heatmap(req):
     mintime = req.GET.get("mintime", "0")
     maxtime = req.GET.get("maxtime", "41")
