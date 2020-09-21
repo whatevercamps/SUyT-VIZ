@@ -258,6 +258,8 @@ def heatmap_nueva_version(req):
         if ".json" in filename:
             with open(filename, "r") as file:
                 file_data = json.load(file)
+                for fd in file_data:
+                    fd["value"] = fd["subscripts"]
                 return HttpResponse(
                     json.dumps(file_data), content_type="application/json"
                 )
