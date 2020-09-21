@@ -260,6 +260,7 @@ def heatmap_nueva_version(req):
                 file_data = json.load(file)
                 for fd in file_data:
                     fd["value"] = fd["subscripts"]
+                print(file_data)
                 return HttpResponse(
                     json.dumps(file_data), content_type="application/json"
                 )
