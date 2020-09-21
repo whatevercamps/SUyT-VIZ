@@ -12,7 +12,6 @@ urlpatterns = [
     path("totalporzonas", views.totalPorZona, name="totalporzonas"),
     path("totalzonasportiempo", views.totalZonasPorTiempo, name="totalzonasportiempo"),
     path("globalminandmax", views.globalminandmax, name="globalminandmax"),
-]
     path("minandmax", views.minandmax, name="minandmax"),
     path("newminandmax", views.minandmax, name="newminandmax"),
-
+]
