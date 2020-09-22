@@ -182,7 +182,7 @@ function AccesibilityIJ(props) {
                     {tiempos[0]})
                   </h3>
                   <div className='col-12' ref={heatmapContainerRef}>
-                    {heatmapHeight && heatmapWidth && (
+                    {heatmapHeight && heatmapWidth && props.minAndMax && (
                       <HeatmapsWrapper
                         setLineColorScale={setLineColorScale}
                         chartLoaded={chartLoaded}
