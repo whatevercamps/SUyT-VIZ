@@ -193,8 +193,12 @@ function AccesibilityIJ(props) {
                         }}
                         zonasSeleccionadas={zonasSeleccionadas}
                         heatmapData={props.heatmapData}
-                        escala={escala}
+                        escala={[
+                          props.minAndMax["min"],
+                          props.minAndMax["max"],
+                        ]}
                         width={heatmapWidth}
+                        minAndMax={props.minAndMax}
                         height={heatmapHeight}
                         ultimaZonaInteresada={ultimaZonaInteresada}
                         expand={() => setExtended((e) => !e)}

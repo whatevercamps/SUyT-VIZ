@@ -48,11 +48,13 @@ function App() {
 
   const [tiempos, setTiempos] = useState([0, 41]);
 
+  const [minAndMax, setMinAndMax] = useState(null);
+
   useEffect(() => {
     setDataLoaded(false);
     const params = getParams(window.location.href);
     if (params && params.escenario) {
-      const query = `http://172.24.101.57:5000/files/heatmap?escenario=${
+      let query = `http://172.24.101.57:5000/files/heatmap?escenario=${
         params.escenario
       }${params.tiempo ? "&tiempo=" + params.tiempo : ""}${
         params.indicador ? "&indicador=" + params.indicador : ""
@@ -62,6 +64,17 @@ function App() {
         console.log("cargo", data);
         setData(data);
         setDataLoaded(true);
+      });
+
+      query = `http://172.24.101.57:5000/files/newminandmax?escenario=${
+        params.escenario
+      }${params.tiempo ? "&tiempo=" + params.tiempo : ""}${
+        params.indicador ? "&indicador=" + params.indicador : ""
+      }${params.subscripts ? "&subscripts=" + params.subscripts : ""}`;
+
+      d3.json(query).then((data) => {
+        console.log("cargo", data);
+        setMinAndMax(data);
       });
     }
   }, []);
@@ -142,6 +155,7 @@ function App() {
               selectedGraficas={selectedGraficas}
               selectedZonas={selectedZonas}
               tiempos={tiempos}
+              minAndMax={minAndMax}
             />
             {/* <Switch>
               <Route path='/slow-tours'>

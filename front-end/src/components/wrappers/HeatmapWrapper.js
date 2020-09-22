@@ -14,7 +14,8 @@ const HeatmapWrapper = (props) => {
       props.setLineColorScale,
       props.withAxis,
       props.escala || 0,
-      props.diferencia
+      props.diferencia,
+      props.minAndMax
     );
     setChart(chartt);
   }, []);
@@ -42,7 +43,8 @@ const HeatmapWrapper = (props) => {
         props.minUpz,
         props.maxUpz,
         null,
-        props.sortt
+        props.sortt,
+        props.minAndMax
       );
     } else if (
       chart &&
@@ -61,7 +63,8 @@ const HeatmapWrapper = (props) => {
         props.zonasSeleccionadas,
         props.sortt,
         props.heatmapCompareData1,
-        props.heatmapCompareData2
+        props.heatmapCompareData2,
+        props.minAndMax
       );
     } else if (
       chart &&
@@ -78,7 +81,8 @@ const HeatmapWrapper = (props) => {
         null,
         props.sortt,
         props.heatmapCompareData1,
-        props.heatmapCompareData2
+        props.heatmapCompareData2,
+        props.minAndMax
       );
     }
   }, [props.width, props.height]);
@@ -111,7 +115,8 @@ const HeatmapWrapper = (props) => {
         props.sortt,
 
         props.heatmapCompareData1,
-        props.heatmapCompareData2
+        props.heatmapCompareData2,
+        props.minAndMax
       );
     } else if (
       chart &&
@@ -131,7 +136,8 @@ const HeatmapWrapper = (props) => {
         props.sortt,
 
         props.heatmapCompareData1,
-        props.heatmapCompareData2
+        props.heatmapCompareData2,
+        props.minAndMax
       );
     } else if (
       chart &&
@@ -148,7 +154,8 @@ const HeatmapWrapper = (props) => {
         null,
         props.sortt,
         props.heatmapCompareData1,
-        props.heatmapCompareData2
+        props.heatmapCompareData2,
+        props.minAndMax
       );
     }
   }, [
