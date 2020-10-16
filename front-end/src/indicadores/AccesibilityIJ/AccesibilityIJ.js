@@ -136,7 +136,7 @@ function AccesibilityIJ(props) {
   //   ).then(setHeatmapData);
   // }, [tiempos]);
 
-  const chartLoaded = () => {
+  const markChartAsLoaded = () => {
     setLoadedCharts((d) => d + 1);
   };
 
@@ -163,7 +163,7 @@ function AccesibilityIJ(props) {
                   parDeZonas={parDeZonas}
                   escala={escala}
                   tiempos={tiempos}
-                  chartLoaded={chartLoaded}
+                  markChartAsLoaded={markChartAsLoaded}
                   zonasSeleccionadas={zonasSeleccionadas}
                   agregarOQuitarZona={agregarOQuitarZona}
                   cambiarUltimaZonaInteresada={(zz) =>
@@ -185,7 +185,7 @@ function AccesibilityIJ(props) {
                     {heatmapHeight && heatmapWidth && props.minAndMax && (
                       <HeatmapsWrapper
                         setLineColorScale={setLineColorScale}
-                        chartLoaded={chartLoaded}
+                        markChartAsLoaded={markChartAsLoaded}
                         style={{
                           width: "100%",
                           height: "100%",
@@ -214,7 +214,7 @@ function AccesibilityIJ(props) {
                   }
                 >
                   <div className='col-12'>
-                    {/* <BarsWrapper chartLoaded={chartLoaded} tiempos={tiempos} /> */}
+                    {/* <BarsWrapper markChartAsLoaded={markChartAsLoaded} tiempos={tiempos} /> */}
                   </div>
                 </div>
               </div>
@@ -223,7 +223,7 @@ function AccesibilityIJ(props) {
               <div className='col-lg-3'>
                 {/* {zonasParaDona && zonasParaDona.length ? (
                   <DonutsWrapper
-                    chartLoaded={chartLoaded}
+                    markChartAsLoaded={markChartAsLoaded}
                     tiempos={tiempos}
                     zonasParaDona={zonasParaDona}
                   />
@@ -243,7 +243,7 @@ function AccesibilityIJ(props) {
                       data={timelineData}
                       escala={escala}
                       additionalData={additionalTimelineData}
-                      chartLoaded={chartLoaded}
+                      markChartAsLoaded={markChartAsLoaded}
                       setTiempos={actualizarTiempos}
                     />
                   )
@@ -282,7 +282,7 @@ function AccesibilityIJ(props) {
           <Col lg={5}>
             {/* <HeatmapsWrapper
               setLineColorScale={setLineColorScale}
-              chartLoaded={chartLoaded}
+              markChartAsLoaded={markChartAsLoaded}
               style={{
                 width: "100%",
                 height: "100%",
@@ -305,7 +305,7 @@ function AccesibilityIJ(props) {
             </Button> */}
             {/* <HorizontalBarsWrapper
               sort={barrasDifSort}
-              chartLoaded={chartLoaded}
+              markChartAsLoaded={markChartAsLoaded}
               tiempos={tiemposComparar}
             /> */}
           </Col>
@@ -317,7 +317,7 @@ function AccesibilityIJ(props) {
               lineColorScale={lineColorScale}
               parDeZonas={parDeZonas}
               escala={escala}
-              chartLoaded={chartLoaded}
+              markChartAsLoaded={markChartAsLoaded}
               zonasSeleccionadas={zonasSeleccionadas}
               agregarOQuitarZona={agregarOQuitarZona}
               cambiarUltimaZonaInteresada={(zz) => setUltimaZonaInteresada(zz)}

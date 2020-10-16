@@ -31,46 +31,35 @@ def minandmax(req):
 
 
 def totalZonasPorTiempo(req):
-    zonasReq = req.GET.get("zonas", "todas")
-    modo = req.GET.get("modo", "agregado")
+
     tiempo = req.GET.get("tiempo", "0")
-    filename = "docs/escenario1/accesibility_ij_resumen/totalZonaPorTiempo/t_{}.json".format(
-        tiempo
+    escenario = req.GET.get("escenario")
+    indicador = req.GET.get("indicador", "accessibility ij")
+    subscripts = req.GET.get("subcripts", "car|opeak")
+    groupBy = req.GET.get("groupby", "i")
+
+    if " ij" not in indicador:
+        return HttpResponse(
+            json.dumps({"err": "el archivo no es ij"}), content_type="application/json"
+        )
+
+    filename = "{}/{}/{}-{}-{}.csv".format(
+        main_path, escenario, indicador, subscripts, tiempo
     )
-    if modo == "agregado":
-        totalData = {"value": 0}
-    else:
-        totalData = []
+
     try:
-        with open(filename, "r") as file:
-            file_data = file.read()
-            data = json.loads(file_data)
+        df = pd.read_csv(filename)
+        df["value"] = df[subscripts]
+
+        means = df.groupby("z{}".format(groupBy)).mean()
+        return HttpResponse(
+            means.to_json(orient="records"), content_type="application/json"
+        )
     except:
         print("error - error: ", sys.exc_info())
         return HttpResponse(
             json.dumps({"err": sys.exc_info()}), content_type="application/json"
         )
-
-    if zonasReq == "todas":
-        zonas = range(0, 128)
-    else:
-        zonas = zonasReq.split("$")
-
-    print("zonas", zonas)
-
-    for zona in zonas:
-        try:
-            zonaInt = int(zona)
-        except:
-            return HttpResponse(
-                json.dumps({"error": "revisar zonas"}), content_type="application/json"
-            )
-        if modo == "agregado":
-            totalData["value"] += data[zonaInt]["value"] / len(zonas)
-        else:
-            totalData += [dato for dato in data if dato["zone"] == zonaInt]
-
-    return HttpResponse(json.dumps(totalData), content_type="application/json")
 
 
 def globalminandmax(req):
