@@ -265,7 +265,7 @@ def heatmap_nueva_version(req):
             df["value"] = df[subscripts]
             print(df)
             return HttpResponse(
-                json.dumps({"params": params, "data": df.to_json(orient="records")}),
+                json.dumps({"params": params, "data": df.to_dict(orient="records")}),
                 content_type="application/json",
             )
 
