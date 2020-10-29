@@ -235,6 +235,13 @@ def heatmap_nueva_version(req):
     indicador = req.GET.get("indicador", "accessibility ij")
     subscripts = req.GET.get("subcripts", "car|opeak")
 
+    params = {
+        "tiempo": tiempo,
+        "escenario": escenario,
+        "indicador": indicador,
+        "subscripts": subscripts,
+    }
+
     if " ij" not in indicador:
         return HttpResponse(
             json.dumps({"err": "el archivo no es ij"}), content_type="application/json"
@@ -258,7 +265,8 @@ def heatmap_nueva_version(req):
             df["value"] = df[subscripts]
             print(df)
             return HttpResponse(
-                df.to_json(orient="records"), content_type="application/json"
+                json.dumps({"params": params, "data": df.to_json(orient="records")}),
+                content_type="application/json",
             )
 
     except:
@@ -479,3 +487,16 @@ def timelineControlData(req):
     except:
         return HttpResponse(json.dumps(onlyfiles), content_type="application/json")
 
+
+def darIndicadores(req):
+    try:
+        # read
+        with open("{}/inds.json".format(main_path), "r") as filein:
+            files_data = json.load(filein)
+            return HttpResponse(json.dumps(files_data), content_type="application/json")
+
+    except:
+        print("error - error: ", sys.exc_info())
+        return HttpResponse(
+            json.dumps({"err": str(sys.exc_info())}), content_type="application/json"
+        )
