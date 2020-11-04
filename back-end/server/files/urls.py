@@ -14,4 +14,5 @@ urlpatterns = [
     path("globalminandmax", views.globalminandmax, name="globalminandmax"),
     path("minandmax", views.minandmax, name="minandmax"),
     path("newminandmax", views.new_min_max, name="newminandmax"),
+    path("darindicadores", views.darIndicadores, name="darindicadores"),
 ]
