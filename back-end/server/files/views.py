@@ -251,6 +251,9 @@ def heatmap_nueva_version(req):
         filename = "{}/{}/{}-{}-{}.csv".format(
             main_path, escenario, indicador, subscripts, tiempo
         )
+
+        print("filename", filename)
+
         if ".json" in filename:
             with open(filename, "r") as file:
                 file_data = json.load(file)
@@ -272,7 +275,8 @@ def heatmap_nueva_version(req):
     except:
         print("error - error: ", sys.exc_info())
         return HttpResponse(
-            json.dumps({"err": str(sys.exc_info())}), content_type="application/json"
+            json.dumps({"err": str(sys.exc_info()), "filename": filename}),
+            content_type="application/json",
         )
 
 
