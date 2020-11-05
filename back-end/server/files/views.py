@@ -233,7 +233,7 @@ def heatmap_nueva_version(req):
     tiempo = req.GET.get("tiempo", "0")
     escenario = req.GET.get("escenario")
     indicador = req.GET.get("indicador", "accessibility ij")
-    subscripts = req.GET.get("subcripts", "car|opeak")
+    subscripts = req.GET.get("subscripts", "car|opeak")
 
     params = {
         "tiempo": tiempo,
