@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="files-home"),
-    path("get", views.waprfile, name="files-get"),
+    path("get", views.wrapfile, name="files-get"),
     path("timeline", views.timelineControlData, name="time-line"),
     path("heatmap", views.heatmap_nueva_version, name="heatmap-get"),
     path("nuevo-timeline", views.newTimeline, name="new-time-line"),

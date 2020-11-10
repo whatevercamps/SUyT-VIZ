@@ -356,8 +356,8 @@ def heatmap(req):
         )
 
 
-def waprfile(request):
-    escenarios = request.GET.get("escenarios", "6").split("$")
+def wrapfile(request):
+    escenarios = request.GET.get("escenarios", "16").split("$")
     nombres = request.GET.get("nombres", "slow_tours_i").split("$")
     zonas = request.GET.get("zonas", None)
     zonasRangos = request.GET.get("zonas-rangos", None)
@@ -493,14 +493,25 @@ def timelineControlData(req):
 
 
 def darIndicadores(req):
-    try:
-        # read
-        with open("{}/inds.json".format(main_path), "r") as filein:
-            files_data = json.load(filein)
-            return HttpResponse(json.dumps(files_data), content_type="application/json")
+    escenario = req.GET.get("escenario")
 
-    except:
-        print("error - error: ", sys.exc_info())
+    if escenario is not None:
+        try:
+            # read
+            with open("{}/{}/inds.json".format(main_path, escenario), "r") as filein:
+                files_data = json.load(filein)
+                return HttpResponse(
+                    json.dumps(files_data), content_type="application/json"
+                )
+
+        except:
+            print("error - error: ", sys.exc_info())
+            return HttpResponse(
+                json.dumps({"err": str(sys.exc_info())}),
+                content_type="application/json",
+            )
+    else:
         return HttpResponse(
-            json.dumps({"err": str(sys.exc_info())}), content_type="application/json"
+            json.dumps({"err": "proveer escenario"}), content_type="application/json"
         )
+
