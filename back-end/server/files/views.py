@@ -229,7 +229,7 @@ def newTimeline(req):
         )
 
 
-def heatmap_nueva_version(req):
+def dar_datos(req):
     tiempo = req.GET.get("tiempo", "0")
     escenario = req.GET.get("escenario")
     indicador = req.GET.get("indicador", "accessibility ij")
@@ -241,11 +241,6 @@ def heatmap_nueva_version(req):
         "indicador": indicador,
         "subscripts": subscripts,
     }
-
-    if " ij" not in indicador:
-        return HttpResponse(
-            json.dumps({"err": "el archivo no es ij"}), content_type="application/json"
-        )
 
     try:
         filename = "{}/{}/{}-{}-{}.csv".format(
